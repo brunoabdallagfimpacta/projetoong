@@ -34,7 +34,7 @@
 
                     <div class="input-group">
                         <label for="lastname">CNPJ</label>
-                        <input id="cnpj" type="text" name="cnpj" pattern=\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2} title="Digite o CNPJ no formato: xx.xxx.xxx/xxxx-xx" placeholder="Digite o CNPJ" required>
+                        <input id="cnpj" type="text" name="cnpj" pattern=\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2} title="Digite o CNPJ no formato: xx.xxx.xxx/xxxx-xx" placeholder="Digite o CNPJ" onchange="formatarCNPJ(this)" required>
                     </div>
 
                                  <!-- formato de cpf - transformação para cnpj = pattern=\d{3}\.?\d{3}\.?\d{3}-?\d{2}-->
@@ -68,3 +68,22 @@
         </div>
     </div>
 </body>
+<script>
+    function formatarCNPJ(input) {
+        var valor = input.value;
+
+        valor = valor.replace(/\D/g, '');
+
+        valor = valor.replace(/^(\d{2})(\d)/, '$1.$2');
+        valor = valor.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+        valor = valor.replace(/\.(\d{3})(\d)/, '.$1/$2');
+        valor = valor.replace(/(\d{4})(\d)/, '$1-$2');
+
+
+        if (valor.length > 18) {
+            valor = valor.substring(0, 18);
+        }
+
+        input.value = valor;
+    }
+</script>

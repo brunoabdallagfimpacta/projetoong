@@ -31,6 +31,7 @@ nome_da_env\Scripts\activate
 
 source nome_da_env/bin/activate
 ```
+
 ### Instalação das Dependências
   Instale as dependências do projeto usando pip:
 ```bash

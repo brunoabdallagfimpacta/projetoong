@@ -31,10 +31,14 @@
                     <label for="lastname">Nome Fantasia</label>
                     <input type="text" id="nome" placeholder="Digite o Nome Fantasia" required>
                 </div>
+
                 <div class="input-group">
-                    <label for="cnpj">CNPJ</label>
-                     <input id="cnpj" type="cpf" name="cpf" pattern=\d{3}\.?\d{3}\.?\d{3}-?\d{2}  title="Digite um CNPJ no formato: xxx.xxx.xxx-xx" placeholder="Digite o CNPJ" required>
-                </div>
+                    <label for="lastname">CNPJ</label>
+                    <input id="cnpj" type="text" name="cnpj" pattern=\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2} title="Digite o CNPJ no formato: xx.xxx.xxx/xxxx-xx" placeholder="Digite o CNPJ" required>
+                </div> 
+
+                             <!-- formato de cpf - transformação para cnpj = pattern=\d{3}\.?\d{3}\.?\d{3}-?\d{2}-->
+                             
                 <div class="input-group">
                     <label for="email">E-mail</label>
                     <input type="email" id="email" placeholder="Email@email.com.br" required>

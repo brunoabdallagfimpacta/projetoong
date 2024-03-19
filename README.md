@@ -30,20 +30,19 @@ python3 -m venv nome_da_env
 nome_da_env\Scripts\activate
 
 source nome_da_env/bin/activate
-
-Instalação das Dependências
-Instale as dependências do projeto usando pip:
+```
+### Instalação das Dependências
+  Instale as dependências do projeto usando pip:
 ```bash
-
 pip install -r requirements.txt
-
+```
 
 ### Configuração do Projeto
-### Instruções específicas para configurar o projeto, como configurações de banco de dados, variáveis de ambiente, etc.
+Instruções específicas para configurar o projeto, como configurações de banco de dados, variáveis de ambiente, etc.
 
 Execução
 Para rodar o servidor de desenvolvimento do Django:
-
+```bash
 python manage.py runserver
-
+```
 

@@ -44,11 +44,18 @@ class VoluntarioForm(forms.ModelForm):
                 attrs={'placeholder': 'Digite seu primeiro nome', 'id': 'id_primeiro_nome'}
             ),
             'sobrenome': forms.TextInput(attrs={'placeholder': 'Digite seu sobrenome', 'id': 'id_sobrenome'}),
-            'cpf': forms.TextInput(
-                attrs={'placeholder': 'xxx.xxx.xxx-xx', 'id': 'id_cpf', 'pattern': '\d{3}\.?\d{3}\.?\d{3}-?\d{2}'}
-            ),
+            'cpf': forms.TextInput(attrs={
+                'placeholder': 'xxx.xxx.xxx-xx',
+                'id': 'id_cpf',
+                'pattern': '\d{3}\.?\d{3}\.?\d{3}-?\d{2}',
+                'onchange': 'formatarCPF(this)'
+            }),
             'email': forms.EmailInput(attrs={'placeholder': 'Email@email.com.br', 'id': 'id_email'}),
-            'celular': forms.TextInput(attrs={'placeholder': '(00) 90000-0000', 'id': 'id_celular'}),
+            'celular': forms.TextInput(attrs={
+                'placeholder': '(00) 90000-0000',
+                'id': 'id_celular',
+                'onchange': 'formatarCelular(this)'
+            }),
             'senha': forms.PasswordInput(attrs={'placeholder': 'Digite sua senha', 'id': 'id_senha'}),
         }
 

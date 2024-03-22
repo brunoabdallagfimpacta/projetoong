@@ -17,46 +17,84 @@
         </div>
         <div class="form">
             <h2>Cadastre sua Empresa</h2>
-            <p> Já é um membro? <a href="#"> Login </a> </p>
+            <div class="info-links">
+                <p>Já é um membro? <a href="#">Login</a></p>
+                <p>Pessoa Fisica? <a href="/">Cadastrar</a></p>
+            </div>
             <div class="form-header">
                 <div class="title">
 
                 </div>
-                <form action="#">
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
                     <div class="input-group">
                         <label for="firstname">Razão Social</label>
-                        <input type="text" id="nome" placeholder="Digite a Razão Social" required>
+                        {{ form.razao_social }}
+                        {% for error in form.razao_social.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                        {% endfor %}
                     </div>
+
                     <div class="input-group">
                         <label for="lastname">Nome Fantasia</label>
-                        <input type="text" id="nome" placeholder="Digite o Nome Fantasia" required>
+                        {{ form.nome_fantasia }}
+                        {% for error in form.nome_fantasia.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                        {% endfor %}
                     </div>
 
                     <div class="input-group">
                         <label for="lastname">CNPJ</label>
-                        <input id="cnpj" type="text" name="cnpj" pattern=\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2} title="Digite o CNPJ no formato: xx.xxx.xxx/xxxx-xx" placeholder="Digite o CNPJ" onchange="formatarCNPJ(this)" required>
+                        {{ form.cnpj }}
+                        {% for error in form.cnpj.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                        {% endfor %}
                     </div>
 
                                  <!-- formato de cpf - transformação para cnpj = pattern=\d{3}\.?\d{3}\.?\d{3}-?\d{2}-->
 
                     <div class="input-group">
                         <label for="email">E-mail</label>
-                        <input type="email" id="email" placeholder="Email@email.com.br" required>
+                        {{ form.email }}
+                        {% for error in form.email.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                        {% endfor %}
                     </div>
 
                     <div class="input-group">
                         <label for="number">Celular</label>
-                        <input type="number" id="telefone" placeholder="Digite o seu celular (00) 0 0000-0000" required>
+                        {{ form.celular }}
+                        {% for error in form.celular.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                        {% endfor %}
                     </div>
 
                     <div class="input-group w50">
                         <label for="password">Senha</label>
-                        <input type="password" id="senha" placeholder="Digite sua senha" required>
+                        {{ form.senha }}
+                        {% for error in form.senha.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                        {% endfor %}
+                        {% if form.senha.errors %}
+                            {% for error in form.senha.errors %}
+                                <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
                     <div class="input-group w50">
                         <label for="confirmpassword">Confirmar Senha</label>
-                        <input type="password" id="Confirmarsenha" placeholder="Digite novamente" required>
+                        {{ form.confirmar_senha }}
+                        {% for error in form.confirmar_senha.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                        {% endfor %}
                     </div>
 
                     <div class="input-group">
@@ -82,6 +120,18 @@
 
         if (valor.length > 18) {
             valor = valor.substring(0, 18);
+        }
+
+        input.value = valor;
+    }
+    function formatarCelular(input) {
+        var valor = input.value;
+
+        valor = valor.replace(/\D/g, '');
+        valor = valor.replace(/^(\d{2})(\d)/, '($1) $2');
+        valor = valor.replace(/(\d{5})(\d)/, '$1-$2');
+        if (valor.length > 15) {
+            valor = valor.substring(0, 15);
         }
 
         input.value = valor;

@@ -113,3 +113,43 @@ form .input-group button{
         padding: 0;
     }
 }
+
+.alert-danger {
+    color: red;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.input-group.error input,
+.input-group.error label {
+    color: red;
+}
+
+.input-group.error input {
+    border-color: red;
+}
+
+.info-links {
+    background-color: #f0f0f0; /* Cor de fundo cinza claro */
+    padding: 20px; /* Espaçamento interno para não tocar as bordas */
+    border-radius: 8px; /* Bordas arredondadas */
+    text-align: center; /* Centraliza o texto */
+    margin-top: 20px; /* Espaço acima da div */
+}
+
+.info-links p {
+    margin: 10px 0; /* Espaço acima e abaixo de cada parágrafo */
+}
+
+.info-links a {
+    color: #007bff; /* Cor azul para links */
+    text-decoration: none; /* Remove o sublinhado do link */
+}
+
+.info-links a:hover {
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}

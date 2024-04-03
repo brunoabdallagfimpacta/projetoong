@@ -1,5 +1,71 @@
-<form action = "" method = "post">
-    {% csrf_token %}
-    {{cadastro.as_p }}
-    <input type="submit" value=Submit">
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style\style.css">
+<title>Login - Voluntário</title>
+</head>
+<body>
+<!-- Conteúdo -->
+<div class="container">
+    <div class="form-image">
+        <img src="img\img-formulario.png">
+    </div>
+    <div clas="form">
+
+        <div class="form-header">
+            <h2>Acesse sua Conta</h2><hr>            
+        </div><br>
+        
+        <form action="#">
+           
+            
+            <div class="input-group">
+                <label>Login:</label>
+            <input type="text" id="identification" placeholder="CPF/CNPJ" required>
+            </div>         
+
+            <div class="input-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="cpf" placeholder="informe sua senha" required>
+            </div>
+            
+
+            <div class="input-group">
+                <button>Entrar</button>
+            </div>
+
+            <div clas="form-end">
+                <a href="">Esqueci minha senha.</a>            
+            </div>
+            
+        
+        </form> 
+
+    </div>    
+</div>
+
+
+<script>
+    document.getElementById('identification').addEventListener('input', function(e) {
+    
+        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})/);
+        e.target.value = !x[2] ? x[1] : x[1] + '.' + x[2] + (x[3] ? '.' : '') + x[3] + (x[4] ? '/' : x[4]) + x[4] + (x[5] ? '-' + x[5] : '');
+        
+        if(e.target.value.length < 15) {
+            x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
+            e.target.value = !x[2] ? x[1] : x[1] + '.' + x[2] + (x[3] ? '.' : '') + x[3] + (x[4] ? '-' + x[4] : '');
+        }
+
+        console.log('Com formatação: ' + e.target.value);
+        
+        //Caso queira pegar apenas os números use essa função para remover todos os caracteres menos os números em Javascript
+        let valor = e.target.value.replace(/[^0-9]/g, '');
+        console.log('Sem formatação: ' + valor);
+    });
+</script>
+
+</body>
+</html>

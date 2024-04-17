@@ -1,6 +1,5 @@
 from django import forms
 from .models import CadastroPessoaFisica, CadastroPessoaJuridica
-from django.core.exceptions import ValidationError
 
 class EmpresaForm(forms.ModelForm):
     confirmar_senha = forms.CharField(widget=forms.PasswordInput, label="Confirmar Senha")
@@ -68,3 +67,8 @@ class VoluntarioForm(forms.ModelForm):
             self.add_error('confirmar_senha', "As senhas não coincidem")
 
         return cleaned_data
+
+
+class CustomLoginForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))

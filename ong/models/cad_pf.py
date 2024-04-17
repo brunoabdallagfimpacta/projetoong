@@ -14,24 +14,26 @@ class CadastroPessoaFisica(models.Model):
     email = models.EmailField(unique=True)
     celular = models.CharField(max_length=15)
     senha = models.CharField(max_length=255)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
     @classmethod
-    def criar_voluntario_com_usuario(cls, email, senha, first_name,  last_name, **extra_fields):
+    def criar_voluntario_com_usuario(cls, email, senha, first_name, last_name, cpf, celular, **extra_fields):
         if User.objects.filter(email=email).exists():
             raise UsuarioJaExisteException(f"Já existe um usuário com o email {email}.")
 
-        user = User.objects.create_user(username=email,  email=email, password=senha, first_name=first_name, last_name=last_name)
-        return True
+        user = User.objects.create_user(username=email, email=email, password=senha, first_name=first_name,
+                                        last_name=last_name, **extra_fields)
+        pessoa_fisica = cls(
+            primeiro_nome=first_name,
+            sobrenome=last_name,
+            cpf=cpf,
+            email=email,
+            celular=celular,
+            user=user,
+            senha=make_password(senha)
+        )
+        pessoa_fisica.save()
+        return pessoa_fisica
 
     def __str__(self):
         return f"{self.primeiro_nome} {self.sobrenome}"
-
-
-@receiver(pre_save, sender=CadastroPessoaFisica)
-def hash_password(sender, instance, **kwargs):
-    if instance._state.adding and instance.senha:
-        instance.senha = make_password(instance.senha)
-    elif not instance._state.adding:
-        original = CadastroPessoaFisica.objects.get(pk=instance.pk)
-        if instance.senha != original.senha:
-            instance.senha = make_password(instance.senha)

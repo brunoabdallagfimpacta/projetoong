@@ -1,17 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style\style.css">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 <title>Login - Voluntário</title>
 </head>
 <body>
 <!-- Conteúdo -->
 <div class="container">
     <div class="form-image">
-        <img src="img\img-formulario.png">
+        <img src="{% static 'img/img-formulario.png' %}">
     </div>
     <div clas="form">
 
@@ -19,17 +20,23 @@
             <h2>Acesse sua Conta</h2><hr>            
         </div><br>
         
-        <form action="#">
-           
-            
+        <form method="post">
+            {% csrf_token %}
+
             <div class="input-group">
                 <label>Login:</label>
-            <input type="text" id="identification" placeholder="CPF/CNPJ" required>
-            </div>         
+                {{ form.username }}
+                {% for error in form.username.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
 
             <div class="input-group">
                 <label for="senha">Senha:</label>
-                <input type="password" id="cpf" placeholder="informe sua senha" required>
+                {{ form.password }}
+                {% for error in form.password.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
             </div>
             
 
@@ -42,14 +49,14 @@
             </div>
             
         
-        </form> 
+        </form>
 
     </div>    
 </div>
 
 
 <script>
-    document.getElementById('identification').addEventListener('input', function(e) {
+    document.getElementById('id_username').addEventListener('input', function(e) {
     
         let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})/);
         e.target.value = !x[2] ? x[1] : x[1] + '.' + x[2] + (x[3] ? '.' : '') + x[3] + (x[4] ? '/' : x[4]) + x[4] + (x[5] ? '-' + x[5] : '');

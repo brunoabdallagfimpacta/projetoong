@@ -15,24 +15,26 @@ class CadastroPessoaJuridica(models.Model):
     email = models.EmailField()
     celular = models.CharField(max_length=15)
     senha = models.CharField(max_length=255)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
     @classmethod
-    def criar_pj_com_usuario(cls, email, senha, nome_fantasia, **extra_fields):
+    def criar_pj_com_usuario(cls, email, senha, nome_fantasia, razao_social, cnpj, celular, **extra_fields):
         if User.objects.filter(email=email).exists():
             raise UsuarioJaExisteException(f"Já existe um usuário com o email {email}.")
 
-        user = User.objects.create_user(username=email, email=email, password=senha, first_name=nome_fantasia)
-        return True
+        user = User.objects.create_user(username=email, email=email, password=senha, first_name=nome_fantasia,
+                                        **extra_fields)
+        pj = cls(
+            razao_social=razao_social,
+            nome_fantasia=nome_fantasia,
+            cnpj=cnpj,
+            email=email,
+            celular=celular,
+            user=user,
+            senha=make_password(senha)
+        )
+        pj.save()
+        return pj
 
     def __str__(self):
         return self.nome_fantasia
-
-
-@receiver(pre_save, sender=CadastroPessoaJuridica)
-def hash_password(sender, instance, **kwargs):
-    if instance._state.adding and instance.senha:
-        instance.senha = make_password(instance.senha)
-    elif not instance._state.adding:
-        original = CadastroPessoaJuridica.objects.get(pk=instance.pk)
-        if instance.senha != original.senha:
-            instance.senha = make_password(instance.senha)

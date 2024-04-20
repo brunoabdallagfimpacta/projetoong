@@ -1,5 +1,5 @@
 from django import forms
-from .models import CadastroPessoaFisica, CadastroPessoaJuridica
+from .models import CadastroPessoaFisica, CadastroPessoaJuridica, ONG
 
 class EmpresaForm(forms.ModelForm):
     confirmar_senha = forms.CharField(widget=forms.PasswordInput, label="Confirmar Senha")
@@ -72,3 +72,17 @@ class VoluntarioForm(forms.ModelForm):
 class CustomLoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+class ONGForm(forms.ModelForm):
+    class Meta:
+        model = ONG
+        fields = ['nome', 'email', 'telefone', 'data_inicio', 'ramo_atuacao', 'outro_ramo']
+        widgets = {
+            'nome': forms.TextInput(attrs={'placeholder': 'Digite o nome', 'class': 'form_input'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'seuemail@email.com', 'class': 'form_input'}),
+            'telefone': forms.TextInput(attrs={'placeholder': 'Número para contato', 'class': 'form_input'}),
+            'data_inicio': forms.DateInput(attrs={'placeholder': 'Data de Início da ONG', 'class': 'form_input', 'type': 'date'}),
+            'ramo_atuacao': forms.RadioSelect(choices=ONG.RAMO_CHOICES),
+            'outro_ramo': forms.TextInput(attrs={'placeholder': 'Digite qual ramo atua', 'class': 'form_input'}),
+        }

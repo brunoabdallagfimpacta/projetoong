@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+
+<head>
+	<meta charset="utf-8">
+    <meta name="author" content="Aluno_impacta" />
+    <meta http-equiv="content-language" content="pt-br" />
+    <meta name="robots" content="index, follow"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastre sua ONG</title>
+
+    <link rel="stylesheet" href="{% static 'css/styleong.css' %}">
+</head>
+
+<body>
+    
+    <div class="container_form">
+
+        <h1> Formulário de Cadastro para Organização Não Governamental </h1>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form_grupo">
+                <label for="nome" class="form_label">Nome da Organização</label>
+                {{ form.nome }}
+                {% for error in form.nome.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+            
+            <div class="form_grupo">
+                <label for="e-mail" class="form_label">Email</label>
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form_grupo">
+                <label for="number" class="form_label">Telefone:</label>
+                {{ form.telefone }}
+                {% for error in form.telefone.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form_grupo">
+                <label for="datanascimento" class="form_label">Atua desde:</label>
+                {{ form.data_inicio }}
+                {% for error in form.data_inicio.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            </div>        
+
+            <div class="form_grupo">
+                    
+            </div>
+
+            <div class="form_grupo">
+
+                <span class="legenda">Em qual ramo atua:</span>
+                
+                <div class="radio-btn">
+                    {{ form.ramo_atuacao }}
+                    {% for error in form.ramo_atuacao.errors %}
+                        <p style="color: red;">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                <div class="radio-btn">
+                    {{ form.outro_ramo }}
+                    {% for error in form.outro_ramo.errors %}
+                        <p style="color: red;">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+
+            <div class="submit">
+                <input type="hidden" name="acao" value="enviar">
+                <button type="submit" name="Submit" class="submit_btn" >Cadastrar Organização </button>                          
+            </div>
+
+</body>
+
+</html>

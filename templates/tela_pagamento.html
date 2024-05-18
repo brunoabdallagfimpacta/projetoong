@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/css_pagamento.css' %}">
+</head>
+<body>
+    <div>
+        <h1>Faça sua doação para o bem!!</h1>
+    </div>
+    <h2>ONG: {{ ong.nome }}</h2>
+
+    <div>
+        <p>Faça sua doação por TED (Transferência Eletrônica Disponível):</p>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="id_nome">Nome:</label>
+                {{ form.nome }}
+            </div>
+            <div>
+                <label for="id_email">Email:</label>
+                {{ form.email }}
+            </div>
+            <div>
+                <label for="id_nome_beneficiario">Nome do Beneficiário:</label><br>
+                {{ form.nome_beneficiario }}
+            </div>
+            <div>
+                <label for="id_cpf">CPF do Beneficiário:</label><br>
+                {{ form.cpf }}
+            </div>
+            <div>
+                <label for="id_banco">Banco Destino:</label><br>
+                {{ form.banco }}
+            </div>
+            <div>
+                <label for="id_agencia">Agência Destino:</label><br>
+                {{ form.agencia }}
+            </div>
+            <div>
+                <label for="id_conta">Conta Destino:</label><br>
+                {{ form.conta }}
+            </div>
+            <div>
+                <label for="id_valor_transferencia">Valor da Transferência:</label><br>
+                {{ form.valor }}
+            </div>
+            <div>
+                <input type="submit" value="Enviar Transferência">
+            </div>
+        </form>
+    </div>
+
+    <br><br><br>
+</body>
+</html>

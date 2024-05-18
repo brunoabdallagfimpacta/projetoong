@@ -7,6 +7,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <title>Login - Voluntário</title>
+<style>
+    .button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background: #FF008A;
+        border: none;
+        border-radius: 4px;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        border-radius: 20px;
+    }
+</style>
 </head>
 <body>
 <!-- Conteúdo -->
@@ -43,6 +58,10 @@
             <div class="input-group">
                 <button>Entrar</button>
             </div>
+
+
+            <a href="{% url 'formulario-pf' %}" class="button-link">Faça seu Cadastro</a>
+
 
             <div clas="form-end">
                 <a href="">Esqueci minha senha.</a>            

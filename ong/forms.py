@@ -1,5 +1,6 @@
 from django import forms
-from .models import CadastroPessoaFisica, CadastroPessoaJuridica, ONG
+from .models import CadastroPessoaFisica, CadastroPessoaJuridica, ONG, Doacao
+
 
 class EmpresaForm(forms.ModelForm):
     confirmar_senha = forms.CharField(widget=forms.PasswordInput, label="Confirmar Senha")
@@ -85,4 +86,19 @@ class ONGForm(forms.ModelForm):
             'data_inicio': forms.DateInput(attrs={'placeholder': 'Data de Início da ONG', 'class': 'form_input', 'type': 'date'}),
             'ramo_atuacao': forms.RadioSelect(choices=ONG.RAMO_CHOICES),
             'outro_ramo': forms.TextInput(attrs={'placeholder': 'Digite qual ramo atua', 'class': 'form_input'}),
+        }
+
+class DoacaoForm(forms.ModelForm):
+    class Meta:
+        model = Doacao
+        fields = ['nome', 'email', 'valor', 'nome_beneficiario', 'cpf', 'banco', 'agencia', 'conta']
+        widgets = {
+            'nome': forms.TextInput(attrs={'placeholder': 'Informe seu nome', 'class': 'form_input'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'email@email.com', 'class': 'form_input'}),
+            'valor': forms.NumberInput(attrs={'placeholder': 'Digite o valor a ser doado', 'class': 'form_input'}),
+            'nome_beneficiario': forms.TextInput(attrs={'placeholder': 'Nome do Beneficiário', 'class': 'form_input'}),
+            'cpf': forms.TextInput(attrs={'placeholder': 'CPF do Beneficiário', 'class': 'form_input'}),
+            'banco': forms.TextInput(attrs={'placeholder': 'Banco Destino', 'class': 'form_input'}),
+            'agencia': forms.TextInput(attrs={'placeholder': 'Agência Destino', 'class': 'form_input'}),
+            'conta': forms.TextInput(attrs={'placeholder': 'Conta Destino', 'class': 'form_input'}),
         }

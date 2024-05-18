@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login as django_login
-from django.shortcuts import render, redirect
-from .forms import EmpresaForm, VoluntarioForm, CustomLoginForm, ONGForm
-from .models import CadastroPessoaFisica, CadastroPessoaJuridica
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import EmpresaForm, VoluntarioForm, CustomLoginForm, ONGForm, DoacaoForm
+from .models import CadastroPessoaFisica, CadastroPessoaJuridica, ONG
 from .utils import UsuarioJaExisteException
 
 
@@ -71,7 +72,7 @@ def login(request):
                 if user is not None:
                     print('Usuário autenticado:', user.username)
                     django_login(request, user)
-                    return redirect('bem_vindo')
+                    return redirect('home-empresa')
                 else:
                     form.add_error("password", "Usuário ou senha incorretos")
             else:
@@ -95,10 +96,51 @@ def cadastro_ong(request):
         form = ONGForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/')  # Redirecione para a página inicial ou uma página de sucesso
+            return redirect('/home/')  # Redirecione para a página inicial ou uma página de sucesso
         else:
             print(form.errors)  # Isso ajudará a ver quais erros estão sendo gerados, se houver
     else:
         form = ONGForm()
 
     return render(request, 'cadastro_ong.html', {'form': form})
+@login_required
+def home(request):
+    dados = ONG.objects.all()
+    return render(request, 'index_lista.html', {'dados': dados})
+
+@login_required
+def editar_ong(request, id):
+    ong = get_object_or_404(ONG, id=id)
+    if request.method == "POST":
+        form = ONGForm(request.POST, instance=ong)
+        if form.is_valid():
+            form.save()
+            return redirect('home-empresa')
+    else:
+        form = ONGForm(instance=ong)
+    return render(request, 'editar_ong.html', {'form': form})
+
+@login_required
+def excluir_ong(request, id):
+    ong = get_object_or_404(ONG, id=id)
+    ong.delete()
+    return redirect('home-empresa')
+
+
+def cadastro_doacao(request, ong_id):
+    ong = get_object_or_404(ONG, id=ong_id)
+
+    if request.method == 'POST':
+        form = DoacaoForm(request.POST)
+        if form.is_valid():
+            doacao = form.save(commit=False)
+            doacao.ong = ong
+            doacao.save()
+            return redirect('/home/')  # Redirecione para a página inicial ou uma página de sucesso
+        else:
+            print(form.errors)  # Isso ajudará a ver quais erros estão sendo gerados, se houver
+            print(request.POST)  # Verificar o conteúdo do POST
+    else:
+        form = DoacaoForm()
+
+    return render(request, 'tela_pagamento.html', {'form': form, 'ong': ong})

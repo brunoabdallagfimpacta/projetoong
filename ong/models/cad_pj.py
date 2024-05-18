@@ -11,7 +11,7 @@ User = get_user_model()
 class CadastroPessoaJuridica(models.Model):
     razao_social = models.CharField(max_length=255)
     nome_fantasia = models.CharField(max_length=255)
-    cnpj = models.CharField(max_length=18)
+    cnpj = models.CharField(max_length=18, unique=True)
     email = models.EmailField()
     celular = models.CharField(max_length=15)
     senha = models.CharField(max_length=255)

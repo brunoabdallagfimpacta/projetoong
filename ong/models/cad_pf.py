@@ -10,7 +10,7 @@ User = get_user_model()
 class CadastroPessoaFisica(models.Model):
     primeiro_nome = models.CharField(max_length=100)
     sobrenome = models.CharField(max_length=100)
-    cpf = models.CharField(max_length=14)
+    cpf = models.CharField(max_length=14, unique=True)
     email = models.EmailField(unique=True)
     celular = models.CharField(max_length=15)
     senha = models.CharField(max_length=255)
